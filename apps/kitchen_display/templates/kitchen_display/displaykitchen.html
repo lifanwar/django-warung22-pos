@@ -78,7 +78,6 @@
             <div class="border-t"></div>
           
             <div class="px-4 py-4 space-y-3 text-sm">
-              {% comment %} {% with has_items=False %} {% endcomment %}
                 {% for item in order.items.all %}
                   {# filter station dulu #}
                   {% if item.menu_item.prep_station == station %}
@@ -119,7 +118,6 @@
                   {% endif %}
                 {% endfor %}
                       
-              {% comment %} {% endwith %} {% endcomment %}
             </div>
           </section>
         {% endfor %}
