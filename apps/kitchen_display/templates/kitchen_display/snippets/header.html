@@ -12,72 +12,39 @@
           <span class="text-gray-600">▦</span>
         </button>
         
-        {% comment %} <!-- Tabs: wrap and scroll on mobile -->
         <nav class="grid grid-cols-2 sm:flex sm:gap-3 sm:whitespace-nowrap sm:overflow-x-auto sm:pb-1 w-full">
-          <!-- First row for mobile (All, To cook, Ready) -->
           <div class="flex items-center justify-center">
-            <button class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 w-full text-center">
+            <a href="?status=all"
+               class="px-3 py-2 rounded-md text-sm font-medium w-full text-center
+                      {% if status_filter == 'all' %}text-blue-700 bg-blue-100{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
               All
-            </button>
+            </a>
           </div>
-        
+      
           <div class="flex items-center justify-center">
-            <button class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center gap-2 w-full text-center">
+            <a href="?status=to_cook"
+               class="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 w-full text-center
+                      {% if status_filter == 'to_cook' %}text-blue-700 bg-blue-100{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
               To cook
-              <span class="inline-flex items-center justify-center min-w-6 h-5 px-2 rounded-md bg-gray-200 text-gray-700 text-xs font-semibold">0</span>
-            </button>
+            </a>
           </div>
-        
+      
           <div class="flex items-center justify-center">
-            <button class="px-3 py-2 rounded-md text-sm font-semibold text-blue-700 bg-blue-100 flex items-center gap-2 w-full text-center">
+            <a href="?status=ready"
+               class="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 w-full text-center
+                      {% if status_filter == 'ready' %}text-blue-700 bg-blue-100{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
               Ready
-              <span class="inline-flex items-center justify-center min-w-6 h-5 px-2 rounded-md bg-blue-600 text-white text-xs font-semibold">2</span>
-            </button>
+            </a>
           </div>
-        
-          <!-- Second row for Completed -->
+      
           <div class="flex items-center justify-center sm:col-span-2">
-            <button class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center gap-2 w-full text-center">
+            <a href="?status=completed"
+               class="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 w-full text-center
+                      {% if status_filter == 'completed' %}text-blue-700 bg-blue-100{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
               Completed
-              <span class="inline-flex items-center justify-center min-w-6 h-5 px-2 rounded-md bg-green-500 text-white text-xs font-semibold">0</span>
-            </button>
+            </a>
           </div>
-        </nav> {% endcomment %}
-        <nav class="grid grid-cols-2 sm:flex sm:gap-3 sm:whitespace-nowrap sm:overflow-x-auto sm:pb-1 w-full">
-
-  <div class="flex items-center justify-center">
-    <a href="?status=all"
-       class="px-3 py-2 rounded-md text-sm font-medium w-full text-center
-              {% if status_filter == 'all' %}text-blue-700 bg-blue-100{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
-      All
-    </a>
-  </div>
-
-  <div class="flex items-center justify-center">
-    <a href="?status=to_cook"
-       class="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 w-full text-center
-              {% if status_filter == 'to_cook' %}text-blue-700 bg-blue-100{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
-      To cook
-    </a>
-  </div>
-
-  <div class="flex items-center justify-center">
-    <a href="?status=ready"
-       class="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 w-full text-center
-              {% if status_filter == 'ready' %}text-blue-700 bg-blue-100{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
-      Ready
-    </a>
-  </div>
-
-  <div class="flex items-center justify-center sm:col-span-2">
-    <a href="?status=completed"
-       class="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 w-full text-center
-              {% if status_filter == 'completed' %}text-blue-700 bg-blue-100{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
-      Completed
-    </a>
-  </div>
-</nav>
-
+        </nav>
       </div>
 
       <!-- Right side: Recall and Close buttons -->
