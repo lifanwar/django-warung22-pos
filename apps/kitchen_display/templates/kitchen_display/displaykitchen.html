@@ -117,6 +117,40 @@
                     {% endif %}
                   {% endif %}
                 {% endfor %}
+
+              {% if status_filter == 'completed' %}
+              <div class="border-t pt-3 mt-2 flex gap-2">
+              
+                <form method="post" class="flex-1">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="reset_to_cook">
+                  <input type="hidden" name="order_id" value="{{ order.id }}">
+                  <button
+                    type="submit"
+                    class="w-full px-3 py-2 rounded-md border bg-white text-xs font-medium text-gray-700 hover:bg-gray-50"
+                  >
+                    ↩ Reset to cook
+                  </button>
+                </form>
+              
+                <form method="post" class="flex-1">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="complete_order">
+                  <input type="hidden" name="order_id" value="{{ order.id }}">
+                  <button
+                    type="submit"
+                    class="w-full px-3 py-2 rounded-md bg-green-600 text-white text-xs font-semibold hover:bg-green-700"
+                  >
+                    ✓ Done
+                  </button>
+                </form>
+              
+              </div>
+            {% endif %}
+            
+              
+
+                
                       
             </div>
           </section>
