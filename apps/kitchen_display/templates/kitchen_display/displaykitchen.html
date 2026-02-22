@@ -78,7 +78,7 @@
             <div class="border-t"></div>
           
             <div class="px-4 py-4 space-y-3 text-sm">
-              {% with has_items=False %}
+              {% comment %} {% with has_items=False %} {% endcomment %}
                 {% for item in order.items.all %}
                   {# filter station dulu #}
                   {% if item.menu_item.prep_station == station %}
@@ -119,12 +119,7 @@
                   {% endif %}
                 {% endfor %}
                       
-                {% if not has_items %}
-                  <div class="text-gray-500 text-xs">
-                    No items for this status.
-                  </div>
-                {% endif %}
-              {% endwith %}
+              {% comment %} {% endwith %} {% endcomment %}
             </div>
           </section>
         {% endfor %}
