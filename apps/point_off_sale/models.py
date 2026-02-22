@@ -106,7 +106,7 @@ class OrderItem(models.Model):
         ('to_cook', 'To Cook'),
         ('ready', 'Ready'),
         ('completed', 'Completed'),
-        ('recalled', 'Recalled'),
+        ('done', 'Done'),
     ]
 
     order = models.ForeignKey(
