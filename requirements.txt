@@ -1,0 +1,6 @@
+django
+psycopg2-binary
+gunicorn
+django-tailwind
+whitenoise
+python-dotenv

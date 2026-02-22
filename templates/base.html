@@ -1,0 +1,35 @@
+{% load tailwind_tags %}
+{% load static %}
+{% tailwind_css %}
+
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+      {% block title %}Base templates{% endblock %}
+    </title>
+
+    <!-- Local Fonts -->
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}" /> 
+
+    <!-- Alpine.js -->
+    <script defer src="{% static 'js/alpine.min.js' %}"></script>
+
+    {% block style %}{% endblock %}
+  </head>
+
+  <body class="antialiased font-sans">
+    <!-- Header -->
+    {% include 'snippets/header.html' %}
+    {% block header %}{% endblock %}
+
+    <!-- Main Content -->
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- Footer -->
+    {% include 'snippets/footer.html' %} {% block extra_js %}{% endblock %}
+  </body>
+</html>
