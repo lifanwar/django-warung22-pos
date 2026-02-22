@@ -1,5 +1,7 @@
 from django.views.generic import ListView
-from apps.point_off_sale.models import Order
+from apps.point_off_sale.models import Order, OrderItem
+from django.http import HttpResponseBadRequest
+from django.shortcuts import get_object_or_404, redirect
 
 class StationOrderListMixin(ListView):
     model = Order
@@ -37,10 +39,33 @@ class StationOrderListMixin(ListView):
             items = o.items.filter(menu_item__prep_station=self.prep_station)
             if status_filter != "all":
                 items = items.filter(status=status_filter)
+            else:
+                items = items.exclude(status="done")
             if items.exists():
                 filtered_orders.append(o)
 
         return filtered_orders
+    
+    def post(self, request, *args, **kwargs):
+        action = request.POST.get("action")
+        order_id = request.POST.get("order_id")
+
+        if action not in ("reset_to_cook", "complete_order"):
+            return HttpResponseBadRequest("Invalid action")
+
+        order = get_object_or_404(Order, pk=order_id, status="open")
+
+        qs = OrderItem.objects.filter(
+            order=order,
+            menu_item__prep_station=self.prep_station,
+        )
+
+        if action == "reset_to_cook":
+            qs.filter(status="completed").update(status="to_cook")
+        elif action == "complete_order":
+            qs.filter(status="completed").update(status="done")
+
+        return redirect(request.path + "?" + request.META.get("QUERY_STRING", ""))
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
