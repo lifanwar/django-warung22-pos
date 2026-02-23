@@ -4,7 +4,7 @@ from apps.point_off_sale.models import Order, OrderItem
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect
 
-class StationOrderListMixin(LoginRequiredMixin, ListView):
+class StationOrder(LoginRequiredMixin, ListView):
     login_url = '/admin/login/'  # Optional: specify your login URL
     redirect_field_name = 'next'  
     model = Order
@@ -13,6 +13,23 @@ class StationOrderListMixin(LoginRequiredMixin, ListView):
 
     prep_station = None  # 'kitchen' atau 'bar'
 
+    def get_prep_station(self):
+        """
+        Map role user ke prep_station.
+        chef / assistant_chef -> 'kitchen'
+        bartender -> 'bar'
+        """
+        profile = getattr(self.request.user, "userprofile", None)
+        if profile is None:
+            # default aman, terserah kamu mau apa
+            return "kitchen"
+
+        if profile.role in ("chef", "assistant_chef"):
+            return "kitchen"
+        elif profile.role == "bartender":
+            return "bar"
+        return "kitchen"
+
     def get_status_filter(self):
         status = self.request.GET.get("status", "all")
         if status not in ("all", "to_cook", "ready", "completed"):
@@ -20,7 +37,9 @@ class StationOrderListMixin(LoginRequiredMixin, ListView):
         return status
 
     def get_queryset(self):
-        if self.prep_station is None:
+        prep_station = self.get_prep_station()
+
+        if prep_station is None:
             raise ValueError("prep_station harus di-set di subclass")
 
         status_filter = self.get_status_filter()
@@ -39,7 +58,7 @@ class StationOrderListMixin(LoginRequiredMixin, ListView):
         # hanya order yang punya item untuk station ini + status tersebut
         filtered_orders = []
         for o in qs:
-            items = o.items.filter(menu_item__prep_station=self.prep_station)
+            items = o.items.filter(menu_item__prep_station=prep_station)
             if status_filter != "all":
                 items = items.filter(status=status_filter)
             else:
@@ -66,9 +85,11 @@ class StationOrderListMixin(LoginRequiredMixin, ListView):
 
         order = get_object_or_404(Order, pk=order_id, status="open")
 
+        prep_station = self.get_prep_station()
+
         qs = OrderItem.objects.filter(
             order=order,
-            menu_item__prep_station=self.prep_station,
+            menu_item__prep_station=prep_station,
         )
 
         if action == "reset_to_cook":
@@ -80,11 +101,6 @@ class StationOrderListMixin(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["station"] = self.prep_station
+        ctx["station"] =  self.get_prep_station()
         ctx["status_filter"] = self.get_status_filter()
         return ctx
-
-
-
-class KitchenOrderListView(StationOrderListMixin):
-    prep_station = "kitchen"
