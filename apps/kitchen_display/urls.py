@@ -1,8 +1,8 @@
-from django.contrib.auth import views as auth_views
 from django.urls import path
 from . import views
 
+app_name = 'kitchen_display'
+
 urlpatterns = [
-    path("display/", views.StationOrder.as_view(), name="kitchen-display"),
-    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("kitchen/", views.StationOrder.as_view(), name="kitchen-display"),
 ]
