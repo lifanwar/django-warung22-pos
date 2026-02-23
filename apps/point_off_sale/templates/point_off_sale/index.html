@@ -197,55 +197,61 @@
       
       <!-- Payment section button -->
       <form 
-          method="post" 
-          action="{% url 'point-off-sales' %}"
-          id="payment-form"
-          class="space-y-2"
-          x-data="{
-            payment: '',
-            subtotal: 0,
-            get change() {
-              const pay = Number(this.payment || 0);
-              return pay - this.subtotal;
-            }
-          }"
-          @cart-subtotal-updated.window="subtotal = Number($event.detail || 0)"
-        >
-          {% csrf_token %}
-          <input type="hidden" name="cart_payload" id="cart-payload">
-        
-          <div class="flex gap-1">
-            <input 
-              type="number" 
-              placeholder="0"
-              x-model="payment"
-              class="flex-1 px-3 py-2 rounded border border-gray-300 text-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-0"
-            >
-            <span class="px-3 py-2 bg-gray-100 border border-gray-300 rounded text-gray-500 font-mono shrink-0">
-              Rp
-            </span>
-          </div>
-      
-          <div class="text-xs text-gray-400">
-            Kembali:
-            <span
-              :class="change >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
-              x-text="
-                change >= 0 
-                  ? 'Rp ' + change.toLocaleString('id-ID') 
-                  : '- Rp ' + Math.abs(change).toLocaleString('id-ID')
-              "
-            ></span>
-          </div>
-      
-          <button 
-            type="submit"
-            id="process-payment"
-            class="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 rounded-lg text-sm transition touch-manipulation"
-          >
-            Payment
-          </button>
-        </form>
+  method="post" 
+  action="{% url 'point-off-sales' %}"
+  id="payment-form"
+  class="space-y-2"
+  x-data="{
+    payment: '',
+    subtotal: 0,
+    previewOpen: false,
+    get change() {
+      const pay = Number(this.payment || 0);
+      return pay - this.subtotal;
+    }
+  }"
+  @cart-subtotal-updated.window="subtotal = Number($event.detail || 0)"
+>
+  {% csrf_token %}
+  <input type="hidden" name="cart_payload" id="cart-payload">
+
+  <div class="flex gap-1">
+    <input 
+      type="number" 
+      placeholder="0"
+      x-model="payment"
+      class="flex-1 px-3 py-2 rounded border border-gray-300 text-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-0"
+    >
+    <span class="px-3 py-2 bg-gray-100 border border-gray-300 rounded text-gray-500 font-mono shrink-0">
+      Rp
+    </span>
+  </div>
+
+  <div class="text-xs text-gray-400">
+    Kembali:
+    <span
+      :class="change >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
+      x-text="
+        change >= 0 
+          ? 'Rp ' + change.toLocaleString('id-ID') 
+          : '- Rp ' + Math.abs(change).toLocaleString('id-ID')
+      "
+    ></span>
+  </div>
+
+  <button 
+    type="button"
+    id="process-payment"
+    class="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 rounded-lg text-sm transition touch-manipulation"
+    @click="previewOpen = true"
+  >
+    Payment
+  </button>
+
+  <!-- Popup preview -->
+  {% include "point_off_sale/snippets/popup-confirm-payment.html" %}
+</form>
+
         
         <!-- End Payment section button -->
 

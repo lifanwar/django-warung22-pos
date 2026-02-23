@@ -204,37 +204,38 @@
   // ========== INIT ==========
 
   function init() {
-    const menuContainer = document;
-    const orderContainer = els.orderItems();
-
-    if (menuContainer) {
-      menuContainer.addEventListener("click", handleMenuClick);
-    }
-
-    if (orderContainer) {
-      orderContainer.addEventListener("click", handleOrderClick);
-    }
-
-    // kategori default
-    setActiveCategory("all");
-
-    // handle submit form Payment and validation
-    const paymentForm = document.getElementById("payment-form");
-    const cartInput = document.getElementById("cart-payload");
-
-    if (paymentForm && cartInput) {
-      paymentForm.addEventListener("submit", function (e) {
-        const snapshot = getCartSnapshot();
-        if (!snapshot.length) {
-          e.preventDefault();
-          alert("Cart kosong.");
-          return;
-        }
-        cartInput.value = JSON.stringify(snapshot);
-      });
+      const menuContainer = document;
+      const orderContainer = els.orderItems();
+    
+      if (menuContainer) {
+        menuContainer.addEventListener("click", handleMenuClick);
+      }
+  
+      if (orderContainer) {
+        orderContainer.addEventListener("click", handleOrderClick);
+      }
+  
+      // kategori default
+      setActiveCategory("all");
+  
+      // handle confirm di popup Payment
+      const paymentForm = document.getElementById("payment-form");
+      const cartInput = document.getElementById("cart-payload");
+      const confirmBtn = document.getElementById("confirm-payment");
+  
+      if (paymentForm && cartInput && confirmBtn) {
+        confirmBtn.addEventListener("click", function () {
+          const snapshot = getCartSnapshot();
+          if (!snapshot.length) {
+            alert("Cart kosong.");
+            return;
+          }
+          cartInput.value = JSON.stringify(snapshot);
+          paymentForm.submit();
+        });
+      }
     }
     
-  }
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

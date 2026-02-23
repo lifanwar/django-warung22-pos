@@ -1,0 +1,62 @@
+<div
+    x-show="previewOpen"
+    x-transition.opacity
+    class="fixed inset-0 z-40 flex items-end md:items-center justify-center bg-black/40"
+    @click.self="previewOpen = false"
+  >
+    <div
+      class="w-full md:w-96 bg-white rounded-t-2xl md:rounded-2xl shadow-xl p-4 md:p-6"
+      x-transition.origin.bottom
+    >
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-semibold text-gray-800">Order Summary</h3>
+        <button
+          type="button"
+          class="text-gray-400 hover:text-gray-600"
+          @click="previewOpen = false"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="text-xs text-gray-500 mb-3 space-y-1">
+        <div class="flex justify-between">
+          <span>Subtotal</span>
+          <span x-text="'Rp ' + subtotal.toLocaleString('id-ID')"></span>
+        </div>
+        <div class="flex justify-between">
+          <span>Payment</span>
+          <span x-text="'Rp ' + Number(payment || 0).toLocaleString('id-ID')"></span>
+        </div>
+        <div class="flex justify-between">
+          <span>Change</span>
+          <span
+            :class="change >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
+            x-text="change >= 0 
+              ? 'Rp ' + change.toLocaleString('id-ID')
+              : '- Rp ' + Math.abs(change).toLocaleString('id-ID')"
+          ></span>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 mt-4">
+        <button
+          type="button"
+          class="px-3 py-2 text-xs rounded border border-gray-300 text-gray-600 hover:bg-gray-50"
+          @click="previewOpen = false"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="px-3 py-2 text-xs rounded bg-green-600 text-white font-semibold hover:bg-green-700"
+          id="confirm-payment"
+        >
+          Confirm & Save
+        </button>
+      </div>
+    </div>
+  </div>
