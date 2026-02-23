@@ -227,9 +227,16 @@
           </div>
       
           <div class="text-xs text-gray-400">
-            Kembali: 
-            <span x-text="`Rp ` + change.toLocaleString('id-ID')"></span>
-          </div>
+              Kembali:
+              <span
+                :class="change >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
+                x-text="
+                  change >= 0 
+                    ? 'Rp ' + change.toLocaleString('id-ID') 
+                    : '- Rp ' + Math.abs(change).toLocaleString('id-ID')
+                "
+              ></span>
+            </div>
       
           <button 
             id="process-payment"
