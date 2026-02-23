@@ -62,62 +62,69 @@
   // ========== RENDER CURRENT ORDER ==========
 
   function render() {
-    const container = els.orderItems();
-    const emptyEl = els.orderEmpty();
-    const totalEl = els.orderTotal();
-    const subtotalNode = els.subtotal();
-    const template = els.template();
+  const container = els.orderItems();
+  const emptyEl = els.orderEmpty();
+  const totalEl = els.orderTotal();
+  const subtotalNode = els.subtotal();
+  const template = els.template();
 
-    if (!container || !subtotalNode || !totalEl || !template) return;
+  if (!container || !subtotalNode || !totalEl || !template) return;
 
-    const items = Object.values(cart);
+  const items = Object.values(cart);
 
-    clearOrderList(container, emptyEl || null);
+  clearOrderList(container, emptyEl || null);
 
-    if (items.length === 0) {
-      if (emptyEl) {
-        emptyEl.classList.remove("hidden");
-        emptyEl.classList.add("block");
-        container.appendChild(emptyEl);
-      }
-      totalEl.classList.add("hidden");
-    } else {
-      if (emptyEl) {
-        emptyEl.classList.add("hidden");
-      }
-
-      items.forEach((item) => {
-        const frag = template.content.cloneNode(true);
-
-        const nameNode = frag.querySelector(".order-item-name");
-        const metaNode = frag.querySelector(".order-item-meta");
-        const totalNode = frag.querySelector(".order-item-total");
-        const minusBtn = frag.querySelector(".order-item-minus");
-
-        if (nameNode) nameNode.textContent = item.name;
-        if (metaNode)
-          metaNode.textContent = `x${item.qty} · ${formatRupiah(
-            item.price
-          )}`;
-        if (totalNode)
-          totalNode.textContent = formatRupiah(item.price * item.qty);
-        if (minusBtn) {
-          minusBtn.dataset.id = item.id;
-        }
-
-        container.appendChild(frag);
-      });
-
-      subtotalNode.textContent = formatRupiah(getSubtotal());
-      totalEl.classList.remove("hidden");
+  if (items.length === 0) {
+    if (emptyEl) {
+      emptyEl.classList.remove("hidden");
+      emptyEl.classList.add("block");
+      container.appendChild(emptyEl);
+    }
+    totalEl.classList.add("hidden");
+  } else {
+    if (emptyEl) {
+      emptyEl.classList.add("hidden");
     }
 
-    // sync badge Alpine
-    const totalItems = getCartCount();
-    window.dispatchEvent(
-      new CustomEvent("cart-updated", { detail: totalItems })
-    );
+    items.forEach((item) => {
+      const frag = template.content.cloneNode(true);
+
+      const nameNode = frag.querySelector(".order-item-name");
+      const metaNode = frag.querySelector(".order-item-meta");
+      const totalNode = frag.querySelector(".order-item-total");
+      const minusBtn = frag.querySelector(".order-item-minus");
+
+      if (nameNode) nameNode.textContent = item.name;
+      if (metaNode)
+        metaNode.textContent = `x${item.qty} · ${formatRupiah(item.price)}`;
+      if (totalNode)
+        totalNode.textContent = formatRupiah(item.price * item.qty);
+      if (minusBtn) {
+        minusBtn.dataset.id = item.id;
+      }
+
+      container.appendChild(frag);
+    });
+
+    totalEl.classList.remove("hidden");
   }
+
+  // hitung subtotal SELALU di akhir
+  const subtotalRaw = getSubtotal();
+  subtotalNode.textContent = formatRupiah(subtotalRaw);
+
+  // sync badge Alpine
+  const totalItems = getCartCount();
+  window.dispatchEvent(
+    new CustomEvent("cart-updated", { detail: totalItems })
+  );
+
+  // kirim subtotal mentah ke Alpine
+  window.dispatchEvent(
+    new CustomEvent("cart-subtotal-updated", { detail: subtotalRaw })
+  );
+}
+
 
   // ========== CATEGORY FILTER (CLIENT-SIDE) ==========
 
