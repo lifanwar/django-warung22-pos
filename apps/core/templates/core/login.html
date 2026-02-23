@@ -11,6 +11,13 @@
 
    <form class="space-y-5" method="post">
     {% csrf_token %} 
+
+    {% if form.errors %}
+      <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+        Username atau password salah!
+      </div>
+    {% endif %}
+    
     <div>
       <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
       <input id="username" name="username" type="text"
