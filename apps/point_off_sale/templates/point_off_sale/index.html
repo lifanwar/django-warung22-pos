@@ -203,10 +203,9 @@
               payment: '',
               subtotal: 0,
               get change() {
-                const pay = Number(this.payment || 0);
-                const chg = pay - this.subtotal;
-                return chg > 0 ? chg : 0;
-              }
+              const pay = Number(this.payment || 0);
+              return pay - this.subtotal;
+            }
             }"
             @cart-subtotal-updated.window="
               // debug: lihat isi event di console
