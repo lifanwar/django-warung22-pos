@@ -97,6 +97,11 @@ class Order(models.Model):
     order_type = models.CharField(max_length=50, choices=ORDER_TYPE, default='dine_in')
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS, default='open')
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def recalculate_subtotal(self):
+        self.subtotal = sum(item.line_total for item in self.items.all())
+        self.save(update_fields=["subtotal"])
 
     def __str__(self):
         return f'{self.customer_name} - {self.order_type} - {self.status}'
@@ -133,4 +138,8 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity}x {self.menu_item.name} [{self.status}]"
+
+    @property
+    def line_total(self):
+        return self.menu_item.price * self.quantity
 

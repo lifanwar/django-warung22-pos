@@ -196,24 +196,24 @@
       </div>
       
       <!-- Payment section button -->
-      <div 
-        id="payment-section" 
-        class="space-y-2"
-            x-data="{
-              payment: '',
-              subtotal: 0,
-              get change() {
+      <form 
+          method="post" 
+          action="{% url 'point-off-sales' %}"
+          id="payment-form"
+          class="space-y-2"
+          x-data="{
+            payment: '',
+            subtotal: 0,
+            get change() {
               const pay = Number(this.payment || 0);
               return pay - this.subtotal;
             }
-            }"
-            @cart-subtotal-updated.window="
-              // debug: lihat isi event di console
-              console.log('subtotal event', $event.detail);
-              subtotal = Number($event.detail || 0);
-            "
-          >
-
+          }"
+          @cart-subtotal-updated.window="subtotal = Number($event.detail || 0)"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="cart_payload" id="cart-payload">
+        
           <div class="flex gap-1">
             <input 
               type="number" 
@@ -227,24 +227,26 @@
           </div>
       
           <div class="text-xs text-gray-400">
-              Kembali:
-              <span
-                :class="change >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
-                x-text="
-                  change >= 0 
-                    ? 'Rp ' + change.toLocaleString('id-ID') 
-                    : '- Rp ' + Math.abs(change).toLocaleString('id-ID')
-                "
-              ></span>
-            </div>
+            Kembali:
+            <span
+              :class="change >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
+              x-text="
+                change >= 0 
+                  ? 'Rp ' + change.toLocaleString('id-ID') 
+                  : '- Rp ' + Math.abs(change).toLocaleString('id-ID')
+              "
+            ></span>
+          </div>
       
           <button 
+            type="submit"
             id="process-payment"
             class="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 rounded-lg text-sm transition touch-manipulation"
           >
             Payment
           </button>
-        </div>
+        </form>
+        
         <!-- End Payment section button -->
 
       </div>
