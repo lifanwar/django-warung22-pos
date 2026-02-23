@@ -1,9 +1,12 @@
 from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.point_off_sale.models import Order, OrderItem
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect
 
-class StationOrderListMixin(ListView):
+class StationOrderListMixin(LoginRequiredMixin, ListView):
+    login_url = '/admin/login/'  # Optional: specify your login URL
+    redirect_field_name = 'next'  
     model = Order
     template_name = "kitchen_display/displaykitchen.html"
     context_object_name = "orders"
