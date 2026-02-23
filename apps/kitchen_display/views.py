@@ -50,6 +50,14 @@ class StationOrderListMixin(ListView):
         action = request.POST.get("action")
         order_id = request.POST.get("order_id")
 
+        # Number Validation
+        try:
+            order_id = int(order_id)
+            if order_id <= 0:
+                raise ValueError
+        except (TypeError, ValueError):
+            return HttpResponseBadRequest("Invalid order_id")
+
         if action not in ("reset_to_cook", "complete_order"):
             return HttpResponseBadRequest("Invalid action")
 
