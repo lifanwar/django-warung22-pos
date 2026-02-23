@@ -8,8 +8,12 @@
   x-data="{ orderOpen: false, cartCount: 0 }"
   @cart-updated.window="cartCount = $event.detail"
 >
+<p class="text-[10px] text-red-500 px-3">
+    {% if messages %}ADA MESSAGE{% else %}TIDAK ADA MESSAGE{% endif %}
+</p>
 
-  {% include "point_off_sale/snippets/header.html" %}
+{% include "point_off_sale/snippets/header.html" %}
+{% include "point_off_sale/snippets/alert.html" %}
 
   <!-- MAIN CONTENT -->
   <div class="flex flex-1 overflow-hidden relative">

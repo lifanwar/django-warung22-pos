@@ -3,6 +3,7 @@ from . import models
 import json
 from decimal import Decimal
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 # Create your views here.
 class CreateOrder(ListView):
@@ -105,5 +106,7 @@ class CreateOrderView(View):
 
         order.subtotal = subtotal
         order.save(update_fields=["subtotal"])
+
+        messages.success(request, "Payment berhasil disimpan.")
 
         return redirect("point-off-sales")
