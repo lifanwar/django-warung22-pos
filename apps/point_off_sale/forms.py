@@ -16,19 +16,28 @@ class OrderDirectSalesForm(forms.Form):
         except json.JSONDecodeError:
             return None
 
-        cart_items = [
-            item for item in cart_data
-            if item.get("id") and int(item.get("quantity", 0)) > 0
-        ]
+        cart_items = []
+        for item in cart_data:
+            try:
+                menu_id = int(item.get("id"))
+                qty = int(item.get("quantity", 0))
+            except (TypeError, ValueError):
+                continue
+            if menu_id and qty > 0:
+                cart_items.append({"id": menu_id, "quantity": qty})
+
         if not cart_items:
             return None
 
+        # Get menu just 1 query
         menu_ids = [item["id"] for item in cart_items]
-        menu_qs = models.MenuItem.objects.filter(
-            id__in=menu_ids, is_available=True
+        menus = models.MenuItem.objects.filter(
+            id__in=menu_ids,
+            is_available=True,
         )
-        menu_map = {str(m.id): m for m in menu_qs}
+        menu_map = {m.id: m for m in menus}
 
+        # 3) Make an Order
         order = models.Order.objects.create(
             customer_name="Direct Sales",
             table=None,
@@ -37,15 +46,18 @@ class OrderDirectSalesForm(forms.Form):
             status="closed",
         )
 
+        # 4) Calculate subtotal + bulk_create items
         subtotal = Decimal("0.00")
         order_items_to_create = []
 
+        updated_by = request.user if request.user.is_authenticated else None
+
         for item in cart_items:
-            menu = menu_map.get(str(item["id"]))
+            menu = menu_map.get(item["id"])
             if not menu:
                 continue
 
-            qty = int(item["quantity"])
+            qty = item["quantity"]
             if qty <= 0:
                 continue
 
@@ -59,13 +71,14 @@ class OrderDirectSalesForm(forms.Form):
                     quantity=qty,
                     notes="",
                     status="done",
-                    updated_by=request.user if request.user.is_authenticated else None,
+                    updated_by=updated_by,
                 )
             )
 
         if order_items_to_create:
             models.OrderItem.objects.bulk_create(order_items_to_create)
 
+        # 5) Update subtotal
         order.subtotal = subtotal
         order.save(update_fields=["subtotal"])
 
