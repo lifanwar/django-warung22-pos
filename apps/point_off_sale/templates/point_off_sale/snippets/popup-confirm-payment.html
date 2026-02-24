@@ -26,19 +26,19 @@
       <div class="text-xs text-gray-500 mb-3 space-y-1">
         <div class="flex justify-between">
           <span>Subtotal</span>
-          <span x-text="'Rp ' + subtotal.toLocaleString('id-ID')"></span>
+          <span x-text="'EGP ' + subtotal.toLocaleString('en-EG')"></span>
         </div>
         <div class="flex justify-between">
           <span>Payment</span>
-          <span x-text="'Rp ' + Number(payment || 0).toLocaleString('id-ID')"></span>
+          <span x-text="'EGP ' + Number(payment || 0).toLocaleString('en-EG')"></span>
         </div>
         <div class="flex justify-between">
           <span>Change</span>
           <span
             :class="change >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
             x-text="change >= 0 
-              ? 'Rp ' + change.toLocaleString('id-ID')
-              : '- Rp ' + Math.abs(change).toLocaleString('id-ID')"
+              ? 'EGP ' + change.toLocaleString('en-EG')
+              : '- EGP ' + Math.abs(change).toLocaleString('en-EG')"
           ></span>
         </div>
       </div>
