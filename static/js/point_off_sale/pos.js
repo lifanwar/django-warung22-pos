@@ -102,6 +102,7 @@
         const metaNode = frag.querySelector(".order-item-meta");
         const totalNode = frag.querySelector(".order-item-total");
         const minusBtn = frag.querySelector(".order-item-minus");
+        const plusBtn = frag.querySelector(".order-item-plus");
 
         if (nameNode) nameNode.textContent = item.name;
         if (metaNode)
@@ -110,6 +111,9 @@
           totalNode.textContent = formatRupiah(item.price * item.qty);
         if (minusBtn) {
           minusBtn.dataset.id = item.id;
+        }
+        if (plusBtn) {
+          plusBtn.dataset.id = item.id;
         }
 
         container.appendChild(frag);
@@ -192,13 +196,26 @@
   }
 
   function handleOrderClick(event) {
+    // handle minuse button
     const minusBtn = event.target.closest(".order-item-minus");
-    if (!minusBtn) return;
+    if (minusBtn) {
+      const id = minusBtn.dataset.id;
+      if (!id) return;
+      removeItem(id);
+      return;
+    }
 
-    const id = minusBtn.dataset.id;
-    if (!id) return;
-
-    removeItem(id);
+      // handle plus button 
+     const plusBtn = event.target.closest(".order-item-plus");
+     if (plusBtn) {
+       const id = plusBtn.dataset.id;
+       if (!id) return;
+       // get data from cart and call addItem
+       const item = cart[String(id)];
+       if (!item) return;
+       addItem(item.id, item.name, item.price);
+       return;
+     }
   }
 
   // ========== INIT ==========
