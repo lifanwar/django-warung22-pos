@@ -8,9 +8,6 @@
   x-data="{ orderOpen: false, cartCount: 0 }"
   @cart-updated.window="cartCount = $event.detail"
 >
-<p class="text-[10px] text-red-500 px-3">
-    {% if messages %}ADA MESSAGE{% else %}TIDAK ADA MESSAGE{% endif %}
-</p>
 
 {% include "point_off_sale/snippets/header.html" %}
 {% include "point_off_sale/snippets/alert.html" %}
@@ -217,7 +214,7 @@
   @cart-subtotal-updated.window="subtotal = Number($event.detail || 0)"
 >
   {% csrf_token %}
-  <input type="hidden" name="cart_payload" id="cart-payload">
+   {{ form.cart_payload }}
 
   <div class="flex gap-1">
     <input 

@@ -220,7 +220,7 @@
   
       // handle confirm di popup Payment
       const paymentForm = document.getElementById("payment-form");
-      const cartInput = document.getElementById("cart-payload");
+      const cartInput = document.getElementById("id_cart_payload"); // get dari form django
       const confirmBtn = document.getElementById("confirm-payment");
   
       if (paymentForm && cartInput && confirmBtn) {
