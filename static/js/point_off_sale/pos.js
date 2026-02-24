@@ -68,6 +68,29 @@
     });
   }
 
+  // ========== MENU BADGE SYNC ==========
+
+  function syncMenuBadges() {
+    const buttons = document.querySelectorAll(".js-menu-add");
+    buttons.forEach((btn) => {
+      const id = String(btn.dataset.id || "");
+      const badge = btn.querySelector(".menu-item-badge");
+      if (!badge) return;
+
+      const item = cart[id];
+      const qty = item ? item.qty : 0;
+
+      if (!qty) {
+        badge.classList.add("hidden");
+        return;
+      }
+
+      badge.textContent = qty;
+      badge.classList.remove("hidden");
+    });
+  }
+
+
   // ========== RENDER CURRENT ORDER ==========
 
   function render() {
@@ -136,6 +159,9 @@
     window.dispatchEvent(
       new CustomEvent("cart-subtotal-updated", { detail: subtotalRaw })
     );
+
+    // call function
+    syncMenuBadges();
   }
 
   // ========== CATEGORY FILTER (CLIENT-SIDE) ==========
