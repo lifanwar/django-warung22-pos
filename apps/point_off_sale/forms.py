@@ -10,7 +10,6 @@ class OrderDirectSalesForm(forms.Form):
 
     def process_order(self, request):
         cart_payload = self.cleaned_data["cart_payload"]
-        print(cart_payload)
 
         try:
             cart_data = json.loads(cart_payload)
