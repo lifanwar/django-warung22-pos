@@ -68,6 +68,20 @@
     });
   }
 
+  // ========== SEARCH FILTER (FRONTEND) ==========
+
+  function filterMenuBySearch(query) {
+    const trimmed = query.trim().toLowerCase();
+    const items = document.querySelectorAll("#menu-grid .js-menu-add");
+
+    items.forEach((btn) => {
+      const name = (btn.dataset.name || "").toLowerCase();
+      const match = !trimmed || name.includes(trimmed);
+      btn.style.display = match ? "" : "none";
+    });
+  }
+
+
   // ========== MENU BADGE SYNC ==========
 
   function syncMenuBadges() {
@@ -260,8 +274,16 @@
   
       // kategori default
       setActiveCategory("all");
+
+      // Handle Search Menu 
+      const searchInput = document.getElementById("menu-search");
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          filterMenuBySearch(this.value);
+        });
+      }
   
-      // handle confirm di popup Payment
+      // handle confirm in Payment popup
       const paymentForm = document.getElementById("payment-form");
       const cartInput = document.getElementById("id_cart_payload"); // get dari form django
       const confirmBtn = document.getElementById("confirm-payment");
