@@ -14,8 +14,8 @@
     template: () => $("order-item-template"),
   };
 
-  function formatRupiah(value) {
-    return "Rp " + Number(value).toLocaleString("id-ID", {
+  function formatCurrency(value) {
+    return "EGP " + Number(value).toLocaleString("en-EG", {
       maximumFractionDigits: 0,
     });
   }
@@ -143,9 +143,9 @@
 
         if (nameNode) nameNode.textContent = item.name;
         if (metaNode)
-          metaNode.textContent = `x${item.qty} · ${formatRupiah(item.price)}`;
+          metaNode.textContent = `x${item.qty} · ${formatCurrency(item.price)}`;
         if (totalNode)
-          totalNode.textContent = formatRupiah(item.price * item.qty);
+          totalNode.textContent = formatCurrency(item.price * item.qty);
         if (minusBtn) {
           minusBtn.dataset.id = item.id;
         }
@@ -161,7 +161,7 @@
 
     // hitung subtotal SELALU di akhir
     const subtotalRaw = getSubtotal();
-    subtotalNode.textContent = formatRupiah(subtotalRaw);
+    subtotalNode.textContent = formatCurrency(subtotalRaw);
 
     // sync badge Alpine
     const totalItems = getCartCount();

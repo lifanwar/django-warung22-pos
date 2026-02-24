@@ -71,7 +71,7 @@
                   {{ item.name }}
                 </span>
                 <span class="text-xs text-gray-400 mt-1">
-                  Rp {{ item.price|floatformat:0 }}
+                  EGP {{ item.price|floatformat:0 }}
                 </span>
                 <div class="mt-2 h-1 rounded-full bg-gradient-to-r from-pink-400 to-purple-400"></div>
               </button>
@@ -150,7 +150,7 @@
           <div id="order-total" class="hidden pt-4 border-t border-gray-200 mt-4">
             <div class="flex justify-between font-bold text-lg text-gray-800">
               <span>Total</span>
-              <span id="subtotal">Rp 0</span>
+              <span id="subtotal">EGP 0</span>
             </div>
           </div>
         </div>
@@ -239,7 +239,7 @@
       class="flex-1 px-3 py-2 rounded border border-gray-300 text-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-0"
     >
     <span class="px-3 py-2 bg-gray-100 border border-gray-300 rounded text-gray-500 font-mono shrink-0">
-      Rp
+      EGP
     </span>
   </div>
 
@@ -249,8 +249,8 @@
       :class="change >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
       x-text="
         change >= 0 
-          ? 'Rp ' + change.toLocaleString('id-ID') 
-          : '- Rp ' + Math.abs(change).toLocaleString('id-ID')
+          ? 'EGP ' + change.toLocaleString('en-EG') 
+          : '- EGP ' + Math.abs(change).toLocaleString('en-EG')
       "
     ></span>
   </div>
