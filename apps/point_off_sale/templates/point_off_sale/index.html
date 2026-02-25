@@ -54,7 +54,7 @@
               {% with cat_slug=item.group.category.name|slugify %}
               <button 
                 type="button"
-                class="js-menu-add menu-item relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:border-pink-300 active:scale-95 transition p-3 text-left flex flex-col justify-between group min-h-[80px] touch-manipulation"
+                class="js-menu-add menu-item relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:border-pink-300 active:scale-95 transition p-3 text-left flex flex-col justify-between group min-h-20 touch-manipulation"
                 data-id="{{ item.id }}"
                 data-name="{{ item.name|escapejs }}"
                 data-price="{{ item.price|floatformat:2 }}"
@@ -62,7 +62,7 @@
               >
                 <!-- badge qty kecil di pojok kanan atas -->
                 <span
-                  class="menu-item-badge hidden absolute -top-1 -right-1 min-w-4.5 h-4.5 rounded-full bg-pink-500 text-white text-[10px] leading-[18px] text-center font-semibold shadow-md"
+                  class="menu-item-badge hidden absolute -top-1 -right-1 min-w-4.5 h-4.5 rounded-full bg-pink-500 text-white text-[10px] leading-4.5 text-center font-semibold shadow-md"
                 >
                   1
                 </span>
