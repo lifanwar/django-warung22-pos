@@ -1,4 +1,5 @@
 from django.views.generic.edit import FormView
+from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from . import models
@@ -27,3 +28,6 @@ class CreateOrderView(FormView):
         if not order:
             return redirect("point-off-sales")
         return super().form_valid(form)
+
+class OrderList(TemplateView):
+    template_name = 'point_off_sale/orderlist.html'
