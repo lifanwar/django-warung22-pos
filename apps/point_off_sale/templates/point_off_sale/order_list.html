@@ -68,7 +68,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="text-sm font-semibold text-gray-700 min-w-[80px] text-right">{{ order.subtotal|floatformat:2 }} LE</div>
+          <div class="text-sm font-semibold text-gray-700 min-w-20 text-right">{{ order.subtotal|floatformat:2 }} LE</div>
           <div class="min-w-[75px] text-right">
             <span class="px-2 py-1 text-xs rounded-full 
                         {% if order.status == 'open' %}bg-green-100 text-green-700
