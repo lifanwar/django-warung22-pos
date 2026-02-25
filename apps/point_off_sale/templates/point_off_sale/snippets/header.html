@@ -4,18 +4,32 @@
     <div class="flex items-center justify-between gap-2">
       <!-- Nav buttons: scroll horizontal di mobile -->
       <div class="flex gap-1.5 overflow-x-auto scrollbar-hide flex-nowrap">
+        {% with current=request.resolver_match.url_name %}
         <button class="shrink-0 px-3 py-1.5 rounded border border-gray-300 text-sm font-medium text-gray-600 hover:bg-gray-50">
           Tables
         </button>
-        <button class="shrink-0 px-3 py-1.5 rounded border border-gray-300 text-sm font-medium bg-white text-gray-800 font-semibold shadow-sm">
-          Register
-        </button>
-        <button class="shrink-0 px-3 py-1.5 rounded border border-gray-300 text-sm font-medium text-gray-600 hover:bg-gray-50">
-          Orders
-        </button>
+        <a href="{% url 'point-off-sales' %}"
+           class="shrink-0 px-3 py-1.5 rounded border border-gray-300 text-sm font-medium
+           {% if current == 'point-off-sales' %}
+               bg-white text-gray-800 font-semibold shadow-sm
+           {% else %}
+               text-gray-600 hover:bg-gray-50
+           {% endif %}">
+           Register
+        </a>
+        <a href="{% url 'orderlist' %}"
+           class="shrink-0 px-3 py-1.5 rounded border border-gray-300 text-sm font-medium
+           {% if current == 'orderlist' %}
+               bg-white text-gray-800 font-semibold shadow-sm
+           {% else %}
+               text-gray-600 hover:bg-gray-50
+           {% endif %}">
+           Orders
+        </a>
         <button class="shrink-0 px-3 py-1.5 rounded-full bg-teal-400 text-white text-sm font-semibold px-4 shadow">
           Direct Sale
         </button>
+        {% endwith %}
       </div>
 
       <!-- Avatar + menu/cart icon -->
