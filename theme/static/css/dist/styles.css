@@ -1302,6 +1302,9 @@
   .active\:bg-pink-800:active {
     background-color: var(--color-pink-800);
   }
+  .disabled\:opacity-50:disabled {
+    opacity: 50%;
+  }
   @media (width >= 40rem) {
     .sm\:col-span-2 {
       grid-column: span 2 / span 2;

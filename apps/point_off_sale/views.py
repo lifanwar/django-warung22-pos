@@ -54,4 +54,8 @@ class OrderDetailAjaxView(DetailView):
     template_name = "point_off_sale/snippets/order_list/right-panel.html"
     
     def post(self, request, *args, **kwargs):
+        if request.POST.get('action') == 'delete':
+            self.get_object().delete()
+            return redirect('orderlist')  # Django bawaan
         return self.get(request, *args, **kwargs)
+    
