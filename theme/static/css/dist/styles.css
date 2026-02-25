@@ -29,6 +29,7 @@
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-700: oklch(48.8% 0.243 264.376);
+    --color-blue-800: oklch(42.4% 0.199 265.638);
     --color-purple-50: oklch(97.7% 0.014 308.299);
     --color-purple-400: oklch(71.4% 0.203 305.504);
     --color-purple-600: oklch(55.8% 0.288 302.321);
@@ -301,6 +302,9 @@
   }
   .z-20 {
     z-index: 20;
+  }
+  .z-25 {
+    z-index: 25;
   }
   .z-30 {
     z-index: 30;
@@ -1224,6 +1228,9 @@
     --tw-scale-y: 98%;
     --tw-scale-z: 98%;
     scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .active\:bg-blue-800:active {
+    background-color: var(--color-blue-800);
   }
   .active\:bg-green-800:active {
     background-color: var(--color-green-800);

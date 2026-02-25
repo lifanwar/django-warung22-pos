@@ -282,6 +282,7 @@
           payment: '',
           subtotal: 0,
           previewOpen: false,
+          createOpen: false,
           submitting: false,
           get change() {
             const pay = Number(this.payment || 0);
@@ -332,15 +333,26 @@
         >
           Payment
         </button>
+
+         <button
+          type="button"
+          value="create_order"
+          class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3 rounded-lg text-sm transition touch-manipulation"
+          id="process-create-order"
+          @click="createOpen = true"
+        >
+          Buat Order
+        </button>
       
         <!-- Popup preview -->
         {% include "point_off_sale/snippets/popup-confirm-payment.html" %}
+        {% include "point_off_sale/snippets/popup-create-order.html" %}
       </form>
       <!-- End Payment section button -->
-
-      </div>
+      
     </div>
-
+  </div>
+  
     <!-- Backdrop (mobile) -->
     <div
       id="order-backdrop"
