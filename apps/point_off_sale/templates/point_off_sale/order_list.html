@@ -103,23 +103,9 @@
   </div>
   <!-- Left Panel End -->
   
-  {% comment %} <!-- ===================== RIGHT PANEL: Empty State ===================== -->
-  <div class="flex flex-col bg-white overflow-hidden border-l border-gray-100">
-      <div class="flex flex-col items-center justify-center flex-1 space-y-4 p-8 text-gray-400">
-        <div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center shadow-sm">
-          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13M17 13l1.5 4.5M16 15a2 2 0 100-4 2 2 0 000 4z"/>
-          </svg>
-        </div>
-        <div class="text-center space-y-1">
-          <h3 class="text-lg font-semibold text-gray-500">Select an order</h3>
-          <p class="text-sm text-gray-400">Click on any order from the list to view details</p>
-        </div>
-      </div>
-    </div>
-    <!-- Right Panel End --> {% endcomment %}
-     {% include "point_off_sale/snippets/order_list/right-panel.html" %}
+  <!-- ===================== RIGHT PANEL: Empty State ===================== -->
+  {% include "point_off_sale/snippets/order_list/right-panel.html" %}
+  <!-- Right Panel End -->
 
   </div>
 
