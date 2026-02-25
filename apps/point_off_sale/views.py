@@ -76,6 +76,6 @@ class OrderDetailAjaxView(DetailView):
     def post(self, request, *args, **kwargs):
         if request.POST.get('action') == 'delete':
             self.get_object().delete()
-            return redirect('orderlist')  # Django bawaan
+            return redirect('orderlist') 
         return self.get(request, *args, **kwargs)
     
