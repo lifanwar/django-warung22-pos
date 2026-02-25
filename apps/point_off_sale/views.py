@@ -20,7 +20,7 @@ class CreateOrderView(FormView):
         )
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)  # penting supaya form masuk context [web:17]
+        context = super().get_context_data(**kwargs)
         context["menu"] = self.get_menu_queryset()
         context["categories"] = models.MenuCategory.objects.order_by("name")
         return context
