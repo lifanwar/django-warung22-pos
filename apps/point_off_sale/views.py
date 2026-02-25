@@ -1,5 +1,7 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormView
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from . import models
@@ -45,3 +47,11 @@ class OrderList(ListView):
             'subtotal', 
             'created_at'
         ).select_related('table').order_by('-created_at')
+
+@method_decorator(csrf_exempt, name='dispatch')
+class OrderDetailAjaxView(DetailView):
+    model = models.Order
+    template_name = "point_off_sale/snippets/order_list/right-panel.html"
+    
+    def post(self, request, *args, **kwargs):
+        return self.get(request, *args, **kwargs)
