@@ -93,7 +93,7 @@
   </div>
   <!-- Left Panel End -->
   
-  <!-- ===================== RIGHT PANEL: Empty State ===================== -->
+  {% comment %} <!-- ===================== RIGHT PANEL: Empty State ===================== -->
   <div class="flex flex-col bg-white overflow-hidden border-l border-gray-100">
       <div class="flex flex-col items-center justify-center flex-1 space-y-4 p-8 text-gray-400">
         <div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center shadow-sm">
@@ -108,7 +108,8 @@
         </div>
       </div>
     </div>
-    <!-- Right Panel End -->
+    <!-- Right Panel End --> {% endcomment %}
+     {% include "point_off_sale/snippets/order_list/right-panel.html" %}
 
   </div>
 
