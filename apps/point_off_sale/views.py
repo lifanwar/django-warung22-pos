@@ -34,3 +34,14 @@ class OrderList(ListView):
     template_name = "point_off_sale/order_list.html"
     context_object_name = 'orders'
     ordering = ['-created_at']
+
+    def get_queryset(self):
+        return models.Order.objects.only(
+            'id', 
+            'customer_name', 
+            'table', 
+            'order_type', 
+            'status', 
+            'subtotal', 
+            'created_at'
+        ).select_related('table').order_by('-created_at')
