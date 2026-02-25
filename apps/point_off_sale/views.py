@@ -37,16 +37,36 @@ class OrderList(ListView):
     context_object_name = 'orders'
     ordering = ['-created_at']
 
+    VALID_TYPES = ['dine_in', 'takeaway', 'delivery']
+    VALID_STATUS = ['active', 'pending', 'closed']
+
     def get_queryset(self):
-        return models.Order.objects.only(
-            'id', 
-            'customer_name', 
-            'table', 
-            'order_type', 
-            'status', 
-            'subtotal', 
+        qs = models.Order.objects.only(
+            'id',
+            'customer_name',
+            'table',
+            'order_type',
+            'status',
+            'subtotal',
             'created_at'
         ).select_related('table').order_by('-created_at')
+
+        order_type = self.request.GET.get('type')      
+        status = self.request.GET.get('status')   
+
+        if order_type in self.VALID_TYPES:
+            qs = qs.filter(order_type=order_type)
+
+        if status in self.VALID_STATUS:
+            qs = qs.filter(status=status)
+
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_type'] = self.request.GET.get('type', '')
+        context['active_status'] = self.request.GET.get('status', '')
+        return context
 
 @method_decorator(csrf_exempt, name='dispatch')
 class OrderDetailAjaxView(DetailView):

@@ -27,18 +27,73 @@
         </div>
 
         <!-- Status Filter -->
-        <select class="text-sm border border-gray-300 rounded-lg px-3 py-1.5 text-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white">
-          <option>Active</option>
-          <option>Pending</option>
-          <option>Closed</option>
-        </select>
+        <form method="get" class="inline">
+          {% if active_type %}
+            <input type="hidden" name="type" value="{{ active_type }}">
+          {% endif %}
+                
+          <select name="status"
+                  class="text-sm border border-gray-300 rounded-lg px-3 py-1.5 text-gray-600
+                         focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+                  onchange="this.form.submit()">
+                
+            <option value=""
+              {% if not active_status %}selected{% endif %}>
+              All status
+            </option>
+          
+            <option value="active"
+              {% if active_status == 'active' %}selected{% endif %}>
+              Active
+            </option>
+          
+            <option value="pending"
+              {% if active_status == 'pending' %}selected{% endif %}>
+              Pending
+            </option>
+          
+            <option value="closed"
+              {% if active_status == 'closed' %}selected{% endif %}>
+              Closed
+            </option>
+          </select>
+        </form>
+        
+
 
         <!-- Order Type Pills -->
         <div class="flex gap-1">
-          <button class="px-3 py-1.5 text-xs rounded-lg border bg-pink-100 border-pink-400 text-pink-700 font-semibold">Dine In</button>
-          <button class="px-3 py-1.5 text-xs rounded-lg border bg-white border-gray-300 text-gray-600 hover:bg-gray-50">Takeout</button>
-          <button class="px-3 py-1.5 text-xs rounded-lg border bg-white border-gray-300 text-gray-600 hover:bg-gray-50">Delivery</button>
+          <a href="{% url 'orderlist' %}?type=dine_in{% if active_status %}&status={{ active_status }}{% endif %}"
+             class="px-3 py-1.5 text-xs rounded-lg border font-semibold
+                    {% if active_type == 'dine_in' %}
+                      bg-pink-100 border-pink-400 text-pink-700
+                    {% else %}
+                      bg-white border-gray-300 text-gray-600 hover:bg-gray-50
+                    {% endif %}">
+            Dine In
+          </a>
+        
+          <a href="{% url 'orderlist' %}?type=takeaway{% if active_status %}&status={{ active_status }}{% endif %}"
+             class="px-3 py-1.5 text-xs rounded-lg border
+                    {% if active_type == 'takeaway' %}
+                      bg-pink-100 border-pink-400 text-pink-700 font-semibold
+                    {% else %}
+                      bg-white border-gray-300 text-gray-600 hover:bg-gray-50
+                    {% endif %}">
+            Takeaway
+          </a>
+        
+          <a href="{% url 'orderlist' %}?type=delivery{% if active_status %}&status={{ active_status }}{% endif %}"
+             class="px-3 py-1.5 rounded-lg border text-xs
+                    {% if active_type == 'delivery' %}
+                      bg-pink-100 border-pink-400 text-pink-700 font-semibold
+                    {% else %}
+                      bg-white border-gray-300 text-gray-600 hover:bg-gray-50
+                    {% endif %}">
+            Delivery
+          </a>
         </div>
+
 
         <!-- Pagination -->
         <div class="flex items-center gap-1 ml-auto">
