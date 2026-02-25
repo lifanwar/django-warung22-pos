@@ -1,5 +1,5 @@
 from django.views.generic.edit import FormView
-from django.views.generic import TemplateView
+from django.views.generic import ListView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from . import models
@@ -29,5 +29,8 @@ class CreateOrderView(FormView):
             return redirect("point-off-sales")
         return super().form_valid(form)
 
-class OrderList(TemplateView):
-    template_name = 'point_off_sale/orderlist.html'
+class OrderList(ListView):
+    model = models.Order
+    template_name = "point_off_sale/order_list.html"
+    context_object_name = 'orders'
+    ordering = ['-created_at']
