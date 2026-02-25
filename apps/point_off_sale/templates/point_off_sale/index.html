@@ -23,7 +23,7 @@
           {# Tab "All" #}
           <button
             type="button"
-            class="js-category-tab flex-shrink-0 px-4 py-1.5 rounded-lg text-sm font-medium border bg-pink-200 border-pink-300 text-pink-700"
+            class="js-category-tab shrink-0 px-4 py-1.5 rounded-lg text-sm font-medium border bg-pink-200 border-pink-300 text-pink-700"
             data-category="all"
           >
             All
@@ -33,7 +33,7 @@
             {% with cat_slug=cat.name|slugify %}
             <button
               type="button"
-              class="js-category-tab flex-shrink-0 px-4 py-1.5 rounded-lg text-sm font-medium border bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+              class="js-category-tab shrink-0 px-4 py-1.5 rounded-lg text-sm font-medium border bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
               data-category="{{ cat_slug }}"
             >
               {{ cat.name }}
@@ -62,7 +62,7 @@
               >
                 <!-- badge qty kecil di pojok kanan atas -->
                 <span
-                  class="menu-item-badge hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full bg-pink-500 text-white text-[10px] leading-[18px] text-center font-semibold shadow-md"
+                  class="menu-item-badge hidden absolute -top-1 -right-1 min-w-4.5 h-4.5 rounded-full bg-pink-500 text-white text-[10px] leading-[18px] text-center font-semibold shadow-md"
                 >
                   1
                 </span>
@@ -73,7 +73,7 @@
                 <span class="text-xs text-gray-400 mt-1">
                   EGP {{ item.price|floatformat:0 }}
                 </span>
-                <div class="mt-2 h-1 rounded-full bg-gradient-to-r from-pink-400 to-purple-400"></div>
+                <div class="mt-2 h-1 rounded-full bg-linear-to-r from-pink-400 to-purple-400"></div>
               </button>
               {% endwith %}
             {% empty %}
