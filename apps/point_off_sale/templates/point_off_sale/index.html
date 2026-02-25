@@ -221,12 +221,14 @@
           payment: '',
           subtotal: 0,
           previewOpen: false,
+          submitting: false,
           get change() {
             const pay = Number(this.payment || 0);
             return pay - this.subtotal;
           }
         }"
         @cart-subtotal-updated.window="subtotal = Number($event.detail || 0)"
+        @submit="submitting = true" 
       >
         {% csrf_token %}
          {{ form.cart_payload }}
