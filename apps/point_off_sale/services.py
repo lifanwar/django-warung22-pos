@@ -74,19 +74,20 @@ class OrderServices:
         """
         menu_ids = [item["id"] for item in cart_items]
 
-        menus = models.MenuItem.objects.filter(id__in=menu_ids, is_available=True)
+        menus = models.MenuItem.objects.filter(id__in=menu_ids)
         menu_map = {m.id: m for m in menus}
 
-        missing_ids = set(menu_ids) - menu_map.keys()
-        if missing_ids:
+        unavailable = [m for m in menu_map.values() if not m.is_available]
+        if unavailable:
+            nama_menu = ", ".join(m.name for m in unavailable)
             messages.error(
                 request,
-                "Beberapa menu di keranjang tidak tersedia lagi. "
-                "Silakan periksa keranjang Anda.",
+                f"Menu berikut sudah habis/tidak tersedia:\n{nama_menu}"
             )
             raise ValueError("menu_not_available")
 
         return menu_map
+
 
     @staticmethod
     def _create_order(order_type: str) -> models.Order:
