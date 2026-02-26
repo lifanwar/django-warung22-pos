@@ -26,9 +26,13 @@ class CreateOrderView(FormView):
         return context
 
     def form_valid(self, form):
-        order = form.process_direct_sales_order(self.request)
-        if not order:
-            return redirect("point-off-sales")
+        button_type = self.request.POST.get("button_type")
+
+        if button_type == "direct_payment":
+            print("berhasil masuk direct payment")
+            order = form.process_direct_sales_order(self.request)
+            if not order:
+                return redirect("point-off-sales")
         return super().form_valid(form)
 
 class OrderList(ListView):
