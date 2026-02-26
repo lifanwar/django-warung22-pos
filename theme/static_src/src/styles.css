@@ -22,3 +22,10 @@
 [x-cloak] {
   display: none !important;
 }
+
+/* Cloack just work on android in order pannel ID */
+@media (min-width: 768px) {
+  #order-panel[x-cloak] {
+    display: flex !important;
+  }
+}
