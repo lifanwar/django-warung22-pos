@@ -26,7 +26,7 @@ class CreateOrderView(FormView):
         return context
 
     def form_valid(self, form):
-        order = form.process_order(self.request)
+        order = form.process_direct_sales_order(self.request)
         if not order:
             return redirect("point-off-sales")
         return super().form_valid(form)
