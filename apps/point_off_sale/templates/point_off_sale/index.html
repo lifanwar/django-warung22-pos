@@ -176,6 +176,11 @@
                 }
               }
             }"
+            x-init="
+              const input = document.getElementById('order-type-input');
+              if (input && !input.value) {
+                input.value = 'dine_in';
+              }"
           >
 
       <div class="flex gap-2 mb-3 relative">
@@ -288,6 +293,7 @@
           subtotal: 0,
           previewOpen: false,
           submitting: false,
+          button_type: '',
           get change() {
             const pay = Number(this.payment || 0);
             return pay - this.subtotal;
@@ -304,6 +310,13 @@
             name="{{ form.order_type.name }}"
             id="order-type-input"
           >
+
+          <input
+            type="hidden"
+            name="button_type"
+            x-model="button_type"
+          />
+
 
         <div class="flex gap-1">
           <input 
