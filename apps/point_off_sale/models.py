@@ -142,4 +142,4 @@ class OrderItem(models.Model):
     @property
     def line_total(self):
         return self.menu_item.price * self.quantity
-
+    
