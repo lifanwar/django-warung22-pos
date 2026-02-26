@@ -40,6 +40,7 @@ class MenuItemAdmin(admin.ModelAdmin):
     list_display = ("name", "group", "get_category", "price", "prep_station", "is_available")
     list_filter = ("prep_station", "is_available", "group__category")
     search_fields = ("name", "group__name", "group__category__name")
+    list_editable = ("is_available",)
 
     def get_category(self, obj):
         return obj.category.name
