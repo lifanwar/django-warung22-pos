@@ -57,6 +57,11 @@
           id="confirm-payment"
           :disabled="submitting"
           x-text="submitting ? 'Processing...' : 'Confirm & Save'"
+          @click.prevent="
+            button_type = 'direct_payment';
+            submitting = true;
+            $nextTick(() => $el.closest('form').submit());
+          "
         >
           Confirm & Save
         </button>
