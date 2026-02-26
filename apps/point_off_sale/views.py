@@ -29,7 +29,6 @@ class CreateOrderView(FormView):
         button_type = self.request.POST.get("button_type")
 
         if button_type == "direct_payment":
-            print("berhasil masuk direct payment")
             order = form.process_direct_sales_order(self.request)
             if not order:
                 return redirect("point-off-sales")
