@@ -64,7 +64,7 @@
         <!-- Order Type Pills -->
         <div class="flex gap-1">
           <a href="{% url 'orderlist' %}?type=dine_in{% if active_status %}&status={{ active_status }}{% endif %}"
-             class="px-3 py-1.5 text-xs rounded-lg border font-semibold
+             class="px-3 py-1.5 text-xs rounded-lg border
                     {% if active_type == 'dine_in' %}
                       bg-pink-100 border-pink-400 text-pink-700
                     {% else %}
