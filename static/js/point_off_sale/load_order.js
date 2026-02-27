@@ -1,6 +1,7 @@
 (function () {
   // state: { id: { id, name, price, qty, maxQty } }
   const selected = {};
+  let allSelected = false; 
 
   function formatCurrency(value) {
     return "EGP " + Number(value).toLocaleString("en-EG", {
@@ -100,21 +101,41 @@
 
   function handleSelectAllClick() {
     const rows = document.querySelectorAll(".js-order-item-row");
-    rows.forEach((row) => {
-      const id = row.dataset.id;
-      const name = row.dataset.name || row.querySelector(".font-medium")?.textContent || "";
-      const price = Number(row.dataset.price || 0);
-      const maxQty = Number(row.dataset.qty || 0);
-      if (!id || !maxQty) return;
-
-      selected[id] = { id, name, price, qty: maxQty, maxQty };
-
-      const countEl = row.querySelector(".js-selected-count");
-      if (countEl) countEl.textContent = maxQty;
-    });
-
+    
+    if (!allSelected) {
+      // mode: pilih semua
+      rows.forEach((row) => {
+        const id = row.dataset.id;
+        const name =
+          row.dataset.name ||
+          row.querySelector(".font-medium")?.textContent ||
+          "";
+        const price = Number(row.dataset.price || 0);
+        const maxQty = Number(row.dataset.qty || 0);
+        if (!id || !maxQty) return;
+      
+        selected[id] = { id, name, price, qty: maxQty, maxQty };
+      
+        const countEl = row.querySelector(".js-selected-count");
+        if (countEl) countEl.textContent = maxQty;
+      });
+    
+      allSelected = true;
+    } else {
+      // mode: reset semua ke 0
+      Object.keys(selected).forEach((id) => delete selected[id]);
+    
+      rows.forEach((row) => {
+        const countEl = row.querySelector(".js-selected-count");
+        if (countEl) countEl.textContent = 0;
+      });
+    
+      allSelected = false;
+    }
+  
     renderRightPanel();
   }
+
 
   function init() {
     // delegasi click pada document untuk semua row
