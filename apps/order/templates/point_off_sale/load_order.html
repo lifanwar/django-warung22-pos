@@ -73,51 +73,50 @@
 
         <div class="space-y-2">
           {% for item in order_items %}
-          <!-- Item Row -->
-          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
-            <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
+            <div
+              class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition js-order-item-row"
+              data-id="{{ item.id }}"
+              data-name="{{ item.menu_item.name|escapejs }}"
+              data-price="{{ item.menu_item.price }}"
+              data-qty="{{ item.quantity }}"
+            >
+              <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
 
-            <!-- Kiri: nama + info + counter 0/qty -->
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between gap-2">
-                <div class="min-w-0">
-                  <div class="font-medium text-gray-700 text-sm leading-snug truncate">
-                    {{ item.menu_item.name }}
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="min-w-0">
+                    <div class="font-medium text-gray-700 text-sm leading-snug truncate">
+                      {{ item.menu_item.name }}
+                    </div>
+                    <div class="text-xs text-gray-400 mt-0.5">
+                      EGP {{ item.menu_item.price|floatformat:0 }} / item
+                    </div>
+                    {% if item.notes %}
+                    <div class="text-[11px] text-gray-400 mt-0.5 line-clamp-2">
+                      Note: {{ item.notes }}
+                    </div>
+                    {% endif %}
                   </div>
-                  <div class="text-xs text-gray-400 mt-0.5">
-                    EGP {{ item.menu_item.price|floatformat:0 }} / item
+              
+                  <!-- Counter 0/total -->
+                  <div class="shrink-0 text-[11px] font-semibold text-gray-500 bg-gray-50 border border-gray-200 rounded-full px-2 py-0.5">
+                    <span class="text-pink-600 js-selected-count">0</span>/<span>{{ item.quantity }}</span>
                   </div>
-                  {% if item.notes %}
-                  <div class="text-[11px] text-gray-400 mt-0.5 line-clamp-2">
-                    Note: {{ item.notes }}
-                  </div>
-                  {% endif %}
                 </div>
-
-                <!-- Counter 0/total -->
-                <div class="shrink-0 text-[11px] font-semibold text-gray-500 bg-gray-50 border border-gray-200 rounded-full px-2 py-0.5">
-                  <span class="text-pink-600">0</span>/<span>{{ item.quantity }}</span>
+              </div>
+          
+              <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
+                x{{ item.quantity }}
+              </span>
+          
+              <div class="text-right shrink-0">
+                <div class="font-bold text-gray-800 text-sm">
+                  EGP {{ item.line_total|floatformat:0 }}
                 </div>
               </div>
             </div>
+            {% endfor %}
 
-            <!-- Qty total di order -->
-            <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
-              x{{ item.quantity }}
-            </span>
-
-            <!-- Line total order -->
-            <div class="text-right shrink-0">
-              <div class="font-bold text-gray-800 text-sm">
-                EGP {{ item.line_total|floatformat:0 }}
-              </div>
-            </div>
-          </div>
-          {% empty %}
-          <div class="text-center py-12 text-gray-400 italic text-sm">
-            No items in this order.
-          </div>
-          {% endfor %}
         </div>
       </div>
     </div>
@@ -136,18 +135,17 @@
 
       <!-- Summary (scrollable) -->
       <div class="flex-1 overflow-y-auto p-4">
-        <h2 class="text-sm font-semibold text-gray-500 mb-3 uppercase tracking-wide">
-          Selected Items
-        </h2>
-
-        <!-- Placeholder -->
-        <div class="h-full flex items-center justify-center text-center">
-          <p class="text-xs text-gray-400 italic">
-            Belum ada item yang dipilih.<br>
-            Klik item di sebelah kiri untuk menambahkannya ke sini.
-          </p>
+          <h2 class="text-sm font-semibold text-gray-500 mb-3 uppercase tracking-wide">
+            Selected Items
+          </h2>
+      
+          <div id="selected-items" class="space-y-1.5 text-xs text-gray-600">
+            <p class="text-xs text-gray-400 italic js-selected-empty">
+              Belum ada item yang dipilih.<br>
+              Klik item di sebelah kiri untuk menambahkannya ke sini.
+            </p>
+          </div>
         </div>
-      </div>
       <!-- End Summary -->
 
       <!-- FIXED BOTTOM: Total + Actions -->
@@ -155,8 +153,7 @@
 
         <!-- Total -->
         <div class="flex justify-between items-center font-bold text-lg text-gray-800 pb-3 border-b border-gray-200">
-          <span>Total</span>
-          <span>EGP {{ order.subtotal|floatformat:2 }}</span>
+          <span id="selected-total">EGP 0</span>
         </div>
 
         <!-- Payment Form (full width) -->
@@ -208,4 +205,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/point_off_sale/load_order.js' %}"></script>
 {% endblock %}
