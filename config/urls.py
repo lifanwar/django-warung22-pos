@@ -11,7 +11,7 @@ AUTH = [
 
 APPS = [
     path('display/', include('apps.kitchen_display.urls')),
-    path('point-off-sales/', include('apps.point_off_sale.urls'))
+    path('order/', include('apps.order.urls'))
 ]
 
 urlpatterns = AUTH + APPS
