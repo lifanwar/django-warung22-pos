@@ -3,12 +3,11 @@ from django.contrib import admin
 from .models import (
     UserProfile,
     Table,
-    MenuCategory,
-    MenuGroup,
     MenuItem,
     Order,
     OrderItem,
 )
+from apps.menu.models import  MenuCategory, MenuGroup
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
