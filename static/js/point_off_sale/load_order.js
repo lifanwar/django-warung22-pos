@@ -37,7 +37,8 @@
         // wrapper row
         const row = document.createElement("div");
         row.className =
-          "js-selected-row flex items-center justify-between py-1 border-b border-gray-100";
+          "js-selected-row flex items-center justify-between py-1 border-b border-gray-100 cursor-pointer select-none";
+        row.dataset.id = item.id; 
     
         // kiri: qty badge + name
         const left = document.createElement("div");
@@ -101,7 +102,7 @@
 
   function handleSelectAllClick() {
     const rows = document.querySelectorAll(".js-order-item-row");
-    
+
     if (!allSelected) {
       // mode: pilih semua
       rows.forEach((row) => {
@@ -113,33 +114,64 @@
         const price = Number(row.dataset.price || 0);
         const maxQty = Number(row.dataset.qty || 0);
         if (!id || !maxQty) return;
-      
+
         selected[id] = { id, name, price, qty: maxQty, maxQty };
-      
+
         const countEl = row.querySelector(".js-selected-count");
         if (countEl) countEl.textContent = maxQty;
       });
-    
+
       allSelected = true;
     } else {
       // mode: reset semua ke 0
       Object.keys(selected).forEach((id) => delete selected[id]);
-    
+
       rows.forEach((row) => {
         const countEl = row.querySelector(".js-selected-count");
         if (countEl) countEl.textContent = 0;
       });
-    
+
       allSelected = false;
     }
-  
+
     renderRightPanel();
   }
 
 
+  function handleSelectedRowClick(event) {
+    const row = event.target.closest(".js-selected-row");
+    if (!row) return;
+
+    const id = row.dataset.id;
+    const item = selected[id];
+    if (!item) return;
+
+    const nextQty = item.qty - 1;
+
+    if (nextQty <= 0) {
+      delete selected[id];
+    } else {
+      selected[id] = { ...item, qty: nextQty };
+    }
+
+    // update counter di kiri
+    const leftRow = document.querySelector(`.js-order-item-row[data-id="${id}"]`);
+    if (leftRow) {
+      const countEl = leftRow.querySelector(".js-selected-count");
+      if (countEl) countEl.textContent = nextQty;
+    }
+
+    renderRightPanel();
+  }
+
   function init() {
     // delegasi click pada document untuk semua row
     document.addEventListener("click", handleRowClick);
+
+    const selectedItemsContainer = document.getElementById("selected-items");
+    if (selectedItemsContainer) {
+      selectedItemsContainer.addEventListener("click", handleSelectedRowClick);
+    }
 
     const selectAllBtn = document.querySelector("button[type='button'].whitespace-nowrap");
     // Atau kasih id pada button Select All dan pakai getElementById
