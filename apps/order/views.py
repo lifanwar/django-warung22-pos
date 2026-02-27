@@ -4,7 +4,9 @@ from django.views.generic.edit import FormView
 from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+
 from . import models
+from apps.menu.models import MenuCategory
 from .forms import OrderDirectSalesForm
         
 class CreateOrderView(FormView):
@@ -22,7 +24,7 @@ class CreateOrderView(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["menu"] = self.get_menu_queryset()
-        context["categories"] = models.MenuCategory.objects.order_by("name")
+        context["categories"] = MenuCategory.objects.order_by("name")
         return context
 
     def form_valid(self, form):
