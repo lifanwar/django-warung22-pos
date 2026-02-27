@@ -19,7 +19,7 @@
       <!-- Page Title Bar -->
       <div class="flex items-center gap-3 px-4 pt-4 pb-3 bg-white border-b border-gray-200 shadow-sm">
         <a
-          href="#"
+          href="{% url 'orderlist' %}"
           class="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 transition"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,24 +28,41 @@
         </a>
         <div>
           <h1 class="text-sm font-bold text-gray-700">Load Order</h1>
-          <p class="text-xs text-gray-400">Order #1042 &mdash; 27 Feb 2026, 16:00</p>
+          <p class="text-xs text-gray-400">
+            Order #{{ order.id }} &mdash; {{ order.created_at|date:"d M Y, H:i" }}
+          </p>
         </div>
-        <span class="ml-auto px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
-          Pending
+        <span class="ml-auto px-2.5 py-1 rounded-full text-xs font-semibold
+          {% if order.status == 'closed' %}bg-green-100 text-green-700
+          {% elif order.status == 'pending' %}bg-yellow-100 text-yellow-700
+          {% else %}bg-gray-100 text-gray-600{% endif %}">
+          {{ order.get_status_display }}
         </span>
       </div>
 
       <!-- Order Info Badges -->
       <div class="flex flex-wrap gap-2 px-4 pt-3">
         <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
-          Dine In
+          {{ order.get_order_type_display }}
         </span>
+
+        {% if order.table %}
         <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-medium">
-          Table 5
+          Table {{ order.table.name|default:order.table.id }}
         </span>
+        {% endif %}
+
+        {% if order.customer_name %}
         <span class="px-3 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-medium">
-          John Doe
+          {{ order.customer_name }}
         </span>
+        {% endif %}
+
+        {% if order.guest_count %}
+        <span class="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+          {{ order.guest_count }} Guest{{ order.guest_count|pluralize }}
+        </span>
+        {% endif %}
       </div>
 
       <!-- Items List -->
@@ -55,72 +72,44 @@
         </h3>
 
         <div class="space-y-2">
-
+          {% for item in order_items %}
           <!-- Item Row -->
           <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
             <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
+
             <div class="flex-1 min-w-0">
-              <div class="font-medium text-gray-700 text-sm leading-snug truncate">Nasi Goreng Spesial</div>
-              <div class="text-xs text-gray-400 mt-0.5">EGP 45 / item</div>
+              <div class="font-medium text-gray-700 text-sm leading-snug truncate">
+                {{ item.menu_item.name }}
+              </div>
+              <div class="text-xs text-gray-400 mt-0.5">
+                EGP {{ item.menu_item.price|floatformat:0 }} / item
+              </div>
+              {% if item.notes %}
+              <div class="text-[11px] text-gray-400 mt-0.5 line-clamp-2">
+                Note: {{ item.notes }}
+              </div>
+              {% endif %}
             </div>
+
             <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
-              x2
+              x{{ item.quantity }}
             </span>
+
             <div class="text-right shrink-0">
-              <div class="font-bold text-gray-800 text-sm">EGP 90</div>
+              <div class="font-bold text-gray-800 text-sm">
+                EGP {{ item.line_total|floatformat:0 }}
+              </div>
             </div>
           </div>
-
-          <!-- Item Row -->
-          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
-            <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
-            <div class="flex-1 min-w-0">
-              <div class="font-medium text-gray-700 text-sm leading-snug truncate">Ayam Bakar Madu</div>
-              <div class="text-xs text-gray-400 mt-0.5">EGP 60 / item</div>
-            </div>
-            <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
-              x1
-            </span>
-            <div class="text-right shrink-0">
-              <div class="font-bold text-gray-800 text-sm">EGP 60</div>
-            </div>
+          {% empty %}
+          <div class="text-center py-12 text-gray-400 italic text-sm">
+            No items in this order.
           </div>
-
-          <!-- Item Row -->
-          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
-            <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
-            <div class="flex-1 min-w-0">
-              <div class="font-medium text-gray-700 text-sm leading-snug truncate">Es Teh Manis</div>
-              <div class="text-xs text-gray-400 mt-0.5">EGP 15 / item</div>
-            </div>
-            <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
-              x3
-            </span>
-            <div class="text-right shrink-0">
-              <div class="font-bold text-gray-800 text-sm">EGP 45</div>
-            </div>
-          </div>
-
-          <!-- Item Row -->
-          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
-            <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
-            <div class="flex-1 min-w-0">
-              <div class="font-medium text-gray-700 text-sm leading-snug truncate">Kentang Goreng</div>
-              <div class="text-xs text-gray-400 mt-0.5">EGP 25 / item</div>
-            </div>
-            <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
-              x2
-            </span>
-            <div class="text-right shrink-0">
-              <div class="font-bold text-gray-800 text-sm">EGP 50</div>
-            </div>
-          </div>
-
+          {% endfor %}
         </div>
       </div>
     </div>
     <!-- END LEFT PANEL -->
-
 
     <!-- ========================= -->
     <!-- RIGHT: Summary & Payment  -->
@@ -141,57 +130,37 @@
 
         <!-- Item Summary Rows -->
         <div class="space-y-1.5">
-
+          {% for item in order_items %}
           <div class="flex items-center justify-between py-1 border-b border-gray-100">
             <div class="flex items-center gap-2 min-w-0">
-              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">2</span>
-              <span class="truncate text-gray-700 text-xs font-medium">Nasi Goreng Spesial</span>
+              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">
+                {{ item.quantity }}
+              </span>
+              <span class="truncate text-gray-700 text-xs font-medium">
+                {{ item.menu_item.name }}
+              </span>
             </div>
-            <span class="shrink-0 text-gray-500 text-xs ml-2">EGP 90</span>
+            <span class="shrink-0 text-gray-500 text-xs ml-2">
+              EGP {{ item.line_total|floatformat:0 }}
+            </span>
           </div>
-
-          <div class="flex items-center justify-between py-1 border-b border-gray-100">
-            <div class="flex items-center gap-2 min-w-0">
-              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">1</span>
-              <span class="truncate text-gray-700 text-xs font-medium">Ayam Bakar Madu</span>
-            </div>
-            <span class="shrink-0 text-gray-500 text-xs ml-2">EGP 60</span>
-          </div>
-
-          <div class="flex items-center justify-between py-1 border-b border-gray-100">
-            <div class="flex items-center gap-2 min-w-0">
-              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">3</span>
-              <span class="truncate text-gray-700 text-xs font-medium">Es Teh Manis</span>
-            </div>
-            <span class="shrink-0 text-gray-500 text-xs ml-2">EGP 45</span>
-          </div>
-
-          <div class="flex items-center justify-between py-1 border-b border-gray-100">
-            <div class="flex items-center gap-2 min-w-0">
-              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">2</span>
-              <span class="truncate text-gray-700 text-xs font-medium">Kentang Goreng</span>
-            </div>
-            <span class="shrink-0 text-gray-500 text-xs ml-2">EGP 50</span>
-          </div>
-
+          {% endfor %}
         </div>
       </div>
       <!-- End Summary -->
 
-
-      <!-- ================================ -->
-      <!-- FIXED BOTTOM: Total + Actions    -->
-      <!-- ================================ -->
+      <!-- FIXED BOTTOM: Total + Actions -->
       <div class="p-4 border-t border-gray-200 space-y-2 shrink-0">
 
         <!-- Total -->
         <div class="flex justify-between items-center font-bold text-lg text-gray-800 pb-3 border-b border-gray-200">
           <span>Total</span>
-          <span>EGP 245.00</span>
+          <span>EGP {{ order.subtotal|floatformat:2 }}</span>
         </div>
 
         <!-- Payment Form -->
         <form method="post" action="#">
+          {% csrf_token %}
           <div class="flex gap-1 mb-2">
             <input
               type="number"

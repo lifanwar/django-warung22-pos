@@ -84,5 +84,20 @@ class OrderDetailAjaxView(DetailView):
             return redirect('orderlist') 
         return self.get(request, *args, **kwargs)
     
-class LoadOrder(TemplateView):
+class LoadOrder(DetailView):
+    model = models.Order
     template_name = 'point_off_sale/load_order.html'
+    context_object_name = 'order'  
+
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .select_related('table')
+            .prefetch_related('items__menu_item')
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["order_items"] = self.object.items.all()
+        return context
