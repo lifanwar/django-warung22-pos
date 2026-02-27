@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from apps.point_off_sale.models import Order, OrderItem
+from apps.order.models import Order, OrderItem
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect
 
