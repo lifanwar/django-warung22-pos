@@ -74,13 +74,13 @@
         <div class="space-y-2">
           {% for item in order_items %}
             <div
-              class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition js-order-item-row"
+              class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition js-order-item-row cursor-pointer select-none"
               data-id="{{ item.id }}"
               data-name="{{ item.menu_item.name|escapejs }}"
               data-price="{{ item.menu_item.price }}"
               data-qty="{{ item.quantity }}"
             >
-              <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
+              <div class="w-1 self-stretch rounded-full bg-linear-to-b from-pink-400 to-purple-400 shrink-0"></div>
 
               <div class="flex-1 min-w-0">
                 <div class="flex items-center justify-between gap-2">
