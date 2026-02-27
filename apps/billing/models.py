@@ -1,5 +1,5 @@
 from django.db import models
-from apps.point_off_sale.models import Order, OrderItem
+from apps.order.models import Order, OrderItem
 
 # Create your models here.
 
