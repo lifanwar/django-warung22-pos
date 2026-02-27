@@ -1,7 +1,7 @@
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormView
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 
@@ -84,3 +84,5 @@ class OrderDetailAjaxView(DetailView):
             return redirect('orderlist') 
         return self.get(request, *args, **kwargs)
     
+class LoadOrder(TemplateView):
+    template_name = 'point_off_sale/load_order.html'

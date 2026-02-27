@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="flex flex-col min-h-screen bg-gray-100 font-sans">
+
+  {% include "point_off_sale/snippets/header.html" with show_search=True %}
+  {% include "point_off_sale/snippets/alert.html" %}
+
+  <!-- MAIN CONTENT -->
+  <div class="flex flex-1 overflow-hidden flex-col md:flex-row">
+
+    <!-- ===================== -->
+    <!-- LEFT: Order Items List -->
+    <!-- ===================== -->
+    <div class="flex flex-col flex-1 overflow-hidden order-2 md:order-1">
+
+      <!-- Page Title Bar -->
+      <div class="flex items-center gap-3 px-4 pt-4 pb-3 bg-white border-b border-gray-200 shadow-sm">
+        <a
+          href="#"
+          class="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 transition"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </a>
+        <div>
+          <h1 class="text-sm font-bold text-gray-700">Load Order</h1>
+          <p class="text-xs text-gray-400">Order #1042 &mdash; 27 Feb 2026, 16:00</p>
+        </div>
+        <span class="ml-auto px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
+          Pending
+        </span>
+      </div>
+
+      <!-- Order Info Badges -->
+      <div class="flex flex-wrap gap-2 px-4 pt-3">
+        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+          Dine In
+        </span>
+        <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-medium">
+          Table 5
+        </span>
+        <span class="px-3 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-medium">
+          John Doe
+        </span>
+      </div>
+
+      <!-- Items List -->
+      <div class="flex-1 overflow-y-auto p-3 md:p-6">
+        <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">
+          Order Items
+        </h3>
+
+        <div class="space-y-2">
+
+          <!-- Item Row -->
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
+            <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
+            <div class="flex-1 min-w-0">
+              <div class="font-medium text-gray-700 text-sm leading-snug truncate">Nasi Goreng Spesial</div>
+              <div class="text-xs text-gray-400 mt-0.5">EGP 45 / item</div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
+              x2
+            </span>
+            <div class="text-right shrink-0">
+              <div class="font-bold text-gray-800 text-sm">EGP 90</div>
+            </div>
+          </div>
+
+          <!-- Item Row -->
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
+            <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
+            <div class="flex-1 min-w-0">
+              <div class="font-medium text-gray-700 text-sm leading-snug truncate">Ayam Bakar Madu</div>
+              <div class="text-xs text-gray-400 mt-0.5">EGP 60 / item</div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
+              x1
+            </span>
+            <div class="text-right shrink-0">
+              <div class="font-bold text-gray-800 text-sm">EGP 60</div>
+            </div>
+          </div>
+
+          <!-- Item Row -->
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
+            <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
+            <div class="flex-1 min-w-0">
+              <div class="font-medium text-gray-700 text-sm leading-snug truncate">Es Teh Manis</div>
+              <div class="text-xs text-gray-400 mt-0.5">EGP 15 / item</div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
+              x3
+            </span>
+            <div class="text-right shrink-0">
+              <div class="font-bold text-gray-800 text-sm">EGP 45</div>
+            </div>
+          </div>
+
+          <!-- Item Row -->
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex items-center gap-3 hover:border-pink-200 transition">
+            <div class="w-1 self-stretch rounded-full bg-gradient-to-b from-pink-400 to-purple-400 shrink-0"></div>
+            <div class="flex-1 min-w-0">
+              <div class="font-medium text-gray-700 text-sm leading-snug truncate">Kentang Goreng</div>
+              <div class="text-xs text-gray-400 mt-0.5">EGP 25 / item</div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold shrink-0">
+              x2
+            </span>
+            <div class="text-right shrink-0">
+              <div class="font-bold text-gray-800 text-sm">EGP 50</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Notes -->
+        <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-xl text-xs text-yellow-700">
+          <span class="font-semibold">Note:</span> Tidak pakai sambal, es terpisah.
+        </div>
+
+      </div>
+    </div>
+    <!-- END LEFT PANEL -->
+
+
+    <!-- ========================= -->
+    <!-- RIGHT: Summary & Payment  -->
+    <!-- ========================= -->
+    <div class="
+      order-1 md:order-2
+      bg-white shadow-md
+      flex flex-col
+      border-b md:border-b-0 md:border-l border-gray-200
+      w-full md:w-80
+    ">
+
+      <!-- Summary -->
+      <div class="flex-1 overflow-y-auto p-4">
+        <h2 class="text-sm font-semibold text-gray-500 mb-3 uppercase tracking-wide">
+          Order Summary
+        </h2>
+
+        <!-- Item Summary Rows -->
+        <div class="space-y-1.5 mb-4">
+
+          <div class="flex items-center justify-between py-1 border-b border-gray-100">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">2</span>
+              <span class="truncate text-gray-700 text-xs font-medium">Nasi Goreng Spesial</span>
+            </div>
+            <span class="shrink-0 text-gray-500 text-xs ml-2">EGP 90</span>
+          </div>
+
+          <div class="flex items-center justify-between py-1 border-b border-gray-100">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">1</span>
+              <span class="truncate text-gray-700 text-xs font-medium">Ayam Bakar Madu</span>
+            </div>
+            <span class="shrink-0 text-gray-500 text-xs ml-2">EGP 60</span>
+          </div>
+
+          <div class="flex items-center justify-between py-1 border-b border-gray-100">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">3</span>
+              <span class="truncate text-gray-700 text-xs font-medium">Es Teh Manis</span>
+            </div>
+            <span class="shrink-0 text-gray-500 text-xs ml-2">EGP 45</span>
+          </div>
+
+          <div class="flex items-center justify-between py-1 border-b border-gray-100">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-pink-100 text-pink-600 text-[10px] font-bold flex items-center justify-center">2</span>
+              <span class="truncate text-gray-700 text-xs font-medium">Kentang Goreng</span>
+            </div>
+            <span class="shrink-0 text-gray-500 text-xs ml-2">EGP 50</span>
+          </div>
+
+        </div>
+
+        <!-- Subtotal / Tax / Discount / Total -->
+        <div class="space-y-1.5 pt-3 border-t border-gray-200">
+          <div class="flex justify-between text-sm text-gray-500">
+            <span>Subtotal</span>
+            <span>EGP 245.00</span>
+          </div>
+          <div class="flex justify-between text-sm text-gray-500">
+            <span>Tax (10%)</span>
+            <span>EGP 24.50</span>
+          </div>
+          <div class="flex justify-between text-sm text-green-600">
+            <span>Discount</span>
+            <span>- EGP 10.00</span>
+          </div>
+          <div class="flex justify-between font-bold text-lg text-gray-800 pt-2 border-t border-gray-200 mt-1">
+            <span>Total</span>
+            <span>EGP 259.50</span>
+          </div>
+        </div>
+      </div>
+      <!-- End Summary -->
+
+
+      <!-- Action Buttons -->
+      <div class="p-4 border-t border-gray-200 space-y-2">
+
+        <!-- Payment Form -->
+        <form method="post" action="#">
+          <div class="flex gap-1 mb-2">
+            <input
+              type="number"
+              name="payment_amount"
+              placeholder="0"
+              class="flex-1 px-3 py-2 rounded border border-gray-300 text-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-green-400 min-w-0"
+            >
+            <span class="px-3 py-2 bg-gray-100 border border-gray-300 rounded text-gray-500 font-mono shrink-0">
+              EGP
+            </span>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 rounded-lg text-sm transition touch-manipulation flex items-center justify-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Payment
+          </button>
+        </form>
+
+        <!-- Split Bill Button -->
+        <form method="get" action="#">
+          <button
+            type="submit"
+            class="w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-semibold py-3 rounded-lg text-sm transition touch-manipulation flex items-center justify-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+            Split Bill
+          </button>
+        </form>
+
+      </div>
+      <!-- End Action Buttons -->
+
+    </div>
+    <!-- END RIGHT PANEL -->
+
+  </div>
+  <!-- END MAIN CONTENT -->
+
+</div>
+
+{% endblock %}
