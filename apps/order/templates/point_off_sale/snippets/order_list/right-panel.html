@@ -37,9 +37,20 @@
       </div>
 
       <!-- Load Order Button -->
-      <button class="w-full bg-pink-600 hover:bg-pink-700 active:bg-pink-800 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-98 touch-manipulation">
-        Load Order
-      </button>
-    </div>
+{% if object %}
+  <form method="GET" action="{% url 'load-order' object.pk %}">
+    <button type="submit"
+      class="w-full bg-pink-600 hover:bg-pink-700 active:bg-pink-800 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-200 shadow-sm hover:shadow-md active:scale-98 touch-manipulation">
+      Load Order
+    </button>
+  </form>
+{% else %}
+  <button
+    class="w-full bg-gray-200 text-gray-400 font-semibold py-3 rounded-xl text-sm cursor-not-allowed">
+    Load Order
+  </button>
+{% endif %}
+
+	</div>
   </div>
 </section>

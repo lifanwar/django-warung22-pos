@@ -25,9 +25,11 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "apps.billing",
     "apps.core",
     "apps.kitchen_display",
-    "apps.point_off_sale"
+    "apps.order",
+    "apps.menu",
 ]
 
 # Initiasi apps
