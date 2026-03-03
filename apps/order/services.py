@@ -25,7 +25,7 @@ class OrderServices:
             with transaction.atomic():
                 cart_items = OrderServices._parse_cart(request, cart_payload)
                 menu_map = OrderServices._validate_menu_availability(request, cart_items)
-                order = OrderServices._create_order(order_type, status="closed")
+                order = OrderServices._create_order(order_type, customer_name="Direct Sales", status="closed")
                 OrderServices._populate_order_items(request, order, cart_items, menu_map)
 
         except ValueError:
@@ -91,10 +91,10 @@ class OrderServices:
 
 
     @staticmethod
-    def _create_order(order_type: str, status: str) -> models.Order:
+    def _create_order(order_type: str, customer_name: str, status: str) -> models.Order:
         """Membuat record Order baru."""
         return models.Order.objects.create(
-            customer_name="Direct Sales",
+            customer_name=customer_name,
             table=None,
             guest_count=1,
             order_type=order_type,
