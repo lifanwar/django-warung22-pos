@@ -7,7 +7,7 @@ from django.db import transaction
 from django.http import HttpRequest
 
 from . import models
-
+from apps.billing.services import InvoiceServices, PaymentServices
 
 class OrderServices:
 
@@ -27,6 +27,11 @@ class OrderServices:
                 menu_map = OrderServices._validate_menu_availability(request, cart_items)
                 order = OrderServices._create_order(order_type, customer_name="Direct Sales", status="closed")
                 OrderServices._populate_order_items(request, order, cart_items, menu_map)
+
+                # Create invoice
+                invoice =InvoiceServices.create_for_order(order)
+                # Create payment 
+                PaymentServices.add_full_payment(invoice=invoice, method="cash")
 
         except ValueError:
             return None
