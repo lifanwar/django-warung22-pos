@@ -5,6 +5,6 @@ urlpatterns = [
     path('pos/', views.CreateOrderView.as_view(), name='point-off-sales'),
     path('load-order/', views.LoadOrder.as_view(), name='loadorder'),
     path('orders/<int:pk>/load/', views.LoadOrder.as_view(), name='load-order'),
-    path('orders/', views.OrderList.as_view(), name='orderlist'),
+    path('pos/orders/', views.OrderList.as_view(), name='orderlist'),
     path('orders/<int:pk>/', views.OrderDetailAjaxView.as_view(), name='order-detail'),
 ]
